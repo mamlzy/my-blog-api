@@ -52,8 +52,6 @@ module.exports = {
             expiresIn: '1d'
           });
 
-          console.log('TOKEN', token);
-
           return res.status(200).json({
             user: results,
             token: token,
