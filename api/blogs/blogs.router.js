@@ -1,4 +1,4 @@
-const { store } = require('./blogs.controller');
+const { getBlogs, getBlogById, store, update, deleteBlog } = require('./blogs.controller');
 const multer = require('multer');
 const path = require('path');
 
@@ -18,5 +18,9 @@ const upload = multer({
 })
 
 module.exports = (app) => {
+  app.get('/blogs', getBlogs);
+  app.get('/blogs/:id', getBlogById);
   app.post('/blogs', upload.single('file'), store);
+  app.put('/blogs/:id', update);
+  app.delete('/blogs/:id', deleteBlog);
 }

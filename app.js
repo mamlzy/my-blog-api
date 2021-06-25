@@ -10,6 +10,9 @@ app.use(express.json());
 app.use(morgan('combined'));
 app.use(cors());
 
+// static
+app.use('/images', express.static('upload/images'));
+
 // routes
 require('./api/users/users.router')(app);
 require('./api/blogs/blogs.router')(app);
