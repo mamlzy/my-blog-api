@@ -1,3 +1,4 @@
+var fs = require('fs');
 const { getBlogs, getBlogById, store, update, deleteBlog } = require('./blogs.service')
 
 module.exports = {
@@ -43,12 +44,22 @@ module.exports = {
       }
     });
   },
-  update: (req, res) => {
+  updateBlog: (req, res) => {
     // return console.log(req.body, '==', req.file);
     const data = req.body;
     const { id } = req.params;
     data.id = id;
-    console.log(data);
+
+    if (req.file) {
+      // delete old image
+      fs.unlink(`upload/images/${data.image_path}`, function (err) {
+        if (err) throw err;
+        console.log('File deleted!');
+      });
+      data.image_path = req.file.filename;
+    }
+
+    // return console.log(data);
     update(data, (err, results) => {
       if (err) {
         console.log(err);
@@ -66,7 +77,13 @@ module.exports = {
     });
   },
   deleteBlog: (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
+    const data = req.body;
+    fs.unlink(`upload/images/${data.image_path}`, function (err) {
+      if (err) throw err;
+      console.log('File deleted!');
+    });
+
     deleteBlog(id, (err, results) => {
       if (err) {
         console.log(err);

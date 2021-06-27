@@ -46,10 +46,11 @@ module.exports = {
   },
   update: (data, callback) => {
     pool.query(
-      `update blogs set slug=?, title=?, description=? where id=?`,
+      `update blogs set slug=?, title=?, image_path=?, description=? where id=?`,
       [
         data.slug,
         data.title,
+        data.image_path,
         data.description,
         data.id,
       ],
